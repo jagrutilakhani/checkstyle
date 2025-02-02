@@ -305,6 +305,18 @@ public class IndentationCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testNestedMethodCalls() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IndentationCheck.class);
+
+        final String[] expected = {
+                "27:16: " + getCheckMessage(MSG_CHILD_ERROR, "method call", 14, 16),
+                "28:24: " + getCheckMessage(MSG_ERROR, "method call rparen", 22, 24),
+                "29:16: " + getCheckMessage(MSG_ERROR, "lambda arguments", 14, 16),
+        };
+        verifyWarns(checkConfig, getPath("InputIndentationNestedMethodCall.java"), expected);
+    }
+
+    @Test
     public void testDifficultAnnotations() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(IndentationCheck.class);
 
